@@ -1,25 +1,31 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
-#include "ClientInstructions.h"
-#include "PublicKeyHandler.h"
-#include "AsymmetricEncryption.h"
-#include "SymmetricEncryption.h"
-#include "FileTransfer.h"
-#include "CommunicationProtocol.h"
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+#include "Network/ServerInfo.h"
+#include "Network/NetworkManager.h"
+#include "Requests/RegistrationRequest.h"
 
 class Client {
+private:
+    ServerInfo serverInfo;
+    std::string clientName;
+    std::string filename;
+    std::string uniqueID;
+    NetworkManager networkManager;
+    uint8_t version;
+
 public:
     Client();
-    void start();
-
-private:
-    ClientInstructions instructions;
-    PublicKeyHandler keyHandler;
-    AsymmetricEncryption asymEncryption;
-    SymmetricEncryption symEncryption;
-    FileTransfer fileTransfer;
-    CommunicationProtocol commProtocol;
+    void readTransferInfo();
+    void registerWithServer();
+    void exchangeKeys();
+    void sendEncryptedFile();
+    void receiveAndCompareCRC();
+    void run();
 };
 
-#endif
+#endif // CLIENT_H

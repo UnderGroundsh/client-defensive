@@ -1,7 +1,7 @@
 #include "Client.h"
 
 int main() {
-    Client client;
-    client.start();
+    Client client = Client();
+    client.run();
     return 0;
 }
